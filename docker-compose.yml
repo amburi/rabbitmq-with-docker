@@ -13,6 +13,7 @@ services:
             - rabbitmq
         environment:
             RABBITMQ_HOST: rabbitmq
+            RANDOM_NUMBER_QUEUE: random-number-queue
 
     consumer:
         build: ./consumer
@@ -20,3 +21,13 @@ services:
             - rabbitmq
         environment:
             RABBITMQ_HOST: rabbitmq
+            MESSAGE_QUEUE: message-queue
+
+    publisher-consumer:
+        build: ./publisher-consumer
+        depends_on:
+            - rabbitmq
+        environment:
+            RABBITMQ_HOST: rabbitmq
+            RANDOM_NUMBER_QUEUE: random-number-queue
+            MESSAGE_QUEUE: message-queue
