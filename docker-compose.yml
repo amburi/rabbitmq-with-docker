@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+    rabbitmq:
+        image: rabbitmq:3-management-alpine
+        ports:
+            - 5672:5672
+            - 15672:15672
+
+    publisher:
+        build: ./publisher
+        depends_on:
+            - rabbitmq
+        environment:
+            RABBITMQ_HOST: rabbitmq
+
+    consumer:
+        build: ./consumer
+        depends_on:
+            - rabbitmq
+        environment:
+            RABBITMQ_HOST: rabbitmq
